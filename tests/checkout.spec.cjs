@@ -58,6 +58,6 @@ test('navegación móvil y carrito',async({page})=>{
  await expect(page.locator('#mobileNav')).toBeHidden();
  await page.locator('#floatCart').click();
  await expect(page.locator('#drawer')).toBeVisible();
- await page.locator('#cartOverlay').click({position:{x:5,y:5}});
+ await page.keyboard.press('Escape');
  await expect(page.locator('#drawer')).toBeHidden();
 });
