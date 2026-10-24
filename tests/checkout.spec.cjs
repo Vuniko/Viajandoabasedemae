@@ -35,9 +35,10 @@ test('WhatsApp prepara consulta sin enviarla',async({page})=>{
  await page.locator('#buyerPhone').fill('999888777');
  await page.locator('#buyerCity').fill('Lima, Surco');
  await page.route('https://wa.me/**',route=>route.abort());
+ const requestPromise=page.waitForRequest(req=>req.url().startsWith('https://wa.me/51920731674?text='));
  await page.locator('#checkout').click();
- await expect(page).toHaveURL(/wa\.me\/51920731674\?text=/);
- const url=new URL(page.url());
+ const request=await requestPromise;
+ const url=new URL(request.url());
  const msg=url.searchParams.get('text');
  expect(msg).toContain('Cliente Prueba');
  expect(msg).toContain('Playadito tradicional');
